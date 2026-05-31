@@ -1,0 +1,33 @@
+// Module 1: 3-Pin Navigation Blindspot Obstacle Avoidance Prototype
+const int signalPin = 9; // SIG Pin connected to Pin 9
+const int ledPin = 13;   // Red Warning LED connected to Pin 13
+
+void setup() {
+  pinMode(ledPin, OUTPUT);  // LED pin outputs voltage
+}
+
+void loop() {
+  // 1. Set pin to OUTPUT to send the sound pulse out
+  pinMode(signalPin, OUTPUT);
+  digitalWrite(signalPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(signalPin, HIGH);
+  delayMicroseconds(5); // 5 microseconds high pulse for 3-pin sensor
+  digitalWrite(signalPin, LOW);
+  
+  // 2. Set pin to INPUT to listen for the echo bouncing back
+  pinMode(signalPin, INPUT);
+  long duration = pulseIn(signalPin, HIGH);
+  
+  // 3. Calculate distance in centimeters
+  float distance = duration * 0.034 / 2; 
+  
+  // 4. Critical check: Is an obstacle closer than 100cm?
+  if (distance < 100.0) {
+    digitalWrite(ledPin, HIGH); // Turn warning light ON
+  } else {
+    digitalWrite(ledPin, LOW);  // Keep warning light OFF
+  }
+}
+  
+  

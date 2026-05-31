@@ -1,0 +1,27 @@
+#include <Arduino.h>
+
+int tempPin = A0;
+
+void setup()
+{
+    Serial.begin(9600);
+}
+
+void loop()
+{
+    int sensorValue;
+    float voltage;
+    float temperatureC;
+
+    sensorValue = analogRead(tempPin);
+
+    voltage = sensorValue * (5.0 / 1024.0);
+
+    temperatureC = (voltage - 0.5) * 100.0;
+
+    Serial.print("Temperature: ");
+    Serial.print(temperatureC);
+    Serial.println(" C");
+
+    delay(1000);
+}
